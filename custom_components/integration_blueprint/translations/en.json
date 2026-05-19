@@ -6,6 +6,10 @@
                 "data": {
                     "username": "Username",
                     "password": "Password"
+                },
+                "data_description": {
+                    "username": "The username used to authenticate against the service.",
+                    "password": "The password used to authenticate against the service."
                 }
             }
         },

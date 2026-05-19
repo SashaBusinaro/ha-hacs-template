@@ -12,8 +12,9 @@ if TYPE_CHECKING:
     from homeassistant.core import HomeAssistant
     from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-    from .coordinator import BlueprintDataUpdateCoordinator
     from .data import IntegrationBlueprintConfigEntry
+
+PARALLEL_UPDATES = 1
 
 ENTITY_DESCRIPTIONS = (
     SensorEntityDescription(
@@ -41,15 +42,6 @@ async def async_setup_entry(
 
 class IntegrationBlueprintSensor(IntegrationBlueprintEntity, SensorEntity):
     """integration_blueprint Sensor class."""
-
-    def __init__(
-        self,
-        coordinator: BlueprintDataUpdateCoordinator,
-        entity_description: SensorEntityDescription,
-    ) -> None:
-        """Initialize the sensor class."""
-        super().__init__(coordinator)
-        self.entity_description = entity_description
 
     @property
     def native_value(self) -> str | None:

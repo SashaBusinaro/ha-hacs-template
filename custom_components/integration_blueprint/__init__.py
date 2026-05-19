@@ -41,7 +41,9 @@ async def async_setup_entry(
         hass=hass,
         logger=LOGGER,
         name=DOMAIN,
+        config_entry=entry,
         update_interval=timedelta(hours=1),
+        always_update=False,
     )
     entry.runtime_data = IntegrationBlueprintData(
         client=IntegrationBlueprintApiClient(
