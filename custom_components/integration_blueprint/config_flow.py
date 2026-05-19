@@ -19,6 +19,15 @@ from .api import (
 from .const import DOMAIN, LOGGER
 
 
+# NOTE: this template only implements the initial `user` step. Production
+# integrations typically also implement:
+#   - reauth flow (triggered by raising ConfigEntryAuthFailed from the
+#     coordinator) — async_step_reauth + async_step_reauth_confirm
+#   - reconfigure flow — async_step_reconfigure
+#   - options flow — for runtime-tunable settings (poll interval, etc.)
+#   - discovery — declare zeroconf/ssdp/dhcp/bluetooth/usb/mqtt matchers in
+#     manifest.json and implement the corresponding async_step_<source>
+# https://developers.home-assistant.io/docs/config_entries_config_flow_handler
 class BlueprintFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
     """Config flow for Blueprint."""
 

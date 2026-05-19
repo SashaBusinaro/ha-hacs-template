@@ -16,6 +16,11 @@ if TYPE_CHECKING:
 
 PARALLEL_UPDATES = 1
 
+# NOTE: the example sensor returns a string (`body` from JSONPlaceholder).
+# For numeric sensors set `device_class`, `state_class` and
+# `native_unit_of_measurement` on the EntityDescription — this enables unit
+# conversion, statistics graphs and long-term statistics in HA.
+# https://developers.home-assistant.io/docs/core/entity/sensor
 ENTITY_DESCRIPTIONS = (
     SensorEntityDescription(
         key="integration_blueprint",

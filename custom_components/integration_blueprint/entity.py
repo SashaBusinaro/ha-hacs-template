@@ -31,6 +31,11 @@ class IntegrationBlueprintEntity(CoordinatorEntity[BlueprintDataUpdateCoordinato
         self._attr_unique_id = (
             f"{coordinator.config_entry.entry_id}_{entity_description.key}"
         )
+        # NOTE: only `identifiers` is set here. Once your API exposes device
+        # metadata, add `manufacturer`, `model`, `sw_version`, `hw_version` and
+        # `configuration_url` — this enriches the device card and unlocks
+        # update entities (sw_version is required for those).
+        # https://developers.home-assistant.io/docs/device_registry_index
         self._attr_device_info = DeviceInfo(
             identifiers={
                 (

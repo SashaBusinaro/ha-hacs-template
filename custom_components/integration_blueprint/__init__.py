@@ -31,6 +31,12 @@ PLATFORMS: list[Platform] = [
 ]
 
 
+# NOTE: this template does not implement `async_migrate_entry`. Add it here when
+# you bump `ConfigFlow.VERSION` in config_flow.py and need to migrate existing
+# entries to the new schema.
+# https://developers.home-assistant.io/docs/config_entries_index/#migrating-to-a-new-version
+
+
 # https://developers.home-assistant.io/docs/config_entries_index/#setting-up-an-entry
 async def async_setup_entry(
     hass: HomeAssistant,

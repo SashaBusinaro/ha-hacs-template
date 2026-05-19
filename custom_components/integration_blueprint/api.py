@@ -94,6 +94,10 @@ class IntegrationBlueprintApiClient:
             raise IntegrationBlueprintApiClientCommunicationError(
                 msg,
             ) from exception
+        # NOTE: catching bare Exception is intentional for the template — it
+        # guarantees the coordinator always sees an IntegrationBlueprintApiClientError
+        # and never an unexpected library exception. In production, narrow this
+        # to the specific exceptions your client library can raise.
         except Exception as exception:  # pylint: disable=broad-except
             msg = f"Something really wrong happened! - {exception}"
             raise IntegrationBlueprintApiClientError(

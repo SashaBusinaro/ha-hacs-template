@@ -16,6 +16,10 @@ if TYPE_CHECKING:
     from .data import IntegrationBlueprintConfigEntry
 
 
+# NOTE: this coordinator only implements `_async_update_data` (periodic polling).
+# Override `_async_setup` for one-time init that needs to run before the first
+# refresh — e.g. fetching static device metadata (firmware version, model) so
+# entity.py can pass it to DeviceInfo.
 # https://developers.home-assistant.io/docs/integration_fetching_data#coordinated-single-api-poll-for-data-for-all-entities
 class BlueprintDataUpdateCoordinator(DataUpdateCoordinator):
     """Class to manage fetching data from the API."""

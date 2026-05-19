@@ -97,6 +97,13 @@ when a single line genuinely needs to break a rule.
 - `homeassistant` is **excluded** from Dependabot — it must stay in sync with
   the `homeassistant` key in `hacs.json`. Bump them together manually.
 
+## Extension points
+
+Lines starting with `# NOTE:` in the Python source mark places where the
+template is deliberately minimal. Each note explains what is missing, when to
+add it, and links to the relevant HA developer doc. Grep for `# NOTE:` before
+asking the user where to extend — the answer is usually already inline.
+
 ## When in doubt
 
 - Match patterns already in the repo before introducing new ones.
