@@ -44,11 +44,11 @@ People *love* thorough bug reports. I'm not even kidding.
 
 ## Use a Consistent Coding Style
 
-Use [black](https://github.com/ambv/black) to make sure the code follows the style.
+Use [Ruff](https://docs.astral.sh/ruff/) to make sure the code follows the style. Run `scripts/lint` or `pre-commit run --all-files`.
 
 ## Test your code modification
 
-This custom component is based on [integration_blueprint template](https://github.com/ludeeus/integration_blueprint).
+This custom component is based on [ha-hacs-template](https://github.com/SashaBusinaro/ha-hacs-template).
 
 It comes with development environment in a container, easy to launch
 if you use Visual Studio Code. With this container you will have a stand alone

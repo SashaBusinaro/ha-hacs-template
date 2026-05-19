@@ -1,17 +1,20 @@
 # ha-hacs-template
 
 [![Validate][validate-badge]][validate-url]
+[![Lint][lint-badge]][lint-url]
 [![HACS Custom][hacs-badge]][hacs-url]
 [![Release][release-badge]][release-url]
-[![License: MIT][license-badge]][license-url]
+[![License][license-badge]][license-url]
 
-[validate-badge]: https://github.com/SashaBusinaro/ha-hacs-template/actions/workflows/validate.yml/badge.svg
+[validate-badge]: https://img.shields.io/github/actions/workflow/status/SashaBusinaro/ha-hacs-template/validate.yml?style=for-the-badge&label=Validate
 [validate-url]: https://github.com/SashaBusinaro/ha-hacs-template/actions/workflows/validate.yml
+[lint-badge]: https://img.shields.io/github/actions/workflow/status/SashaBusinaro/ha-hacs-template/lint.yml?style=for-the-badge&label=Lint
+[lint-url]: https://github.com/SashaBusinaro/ha-hacs-template/actions/workflows/lint.yml
 [hacs-badge]: https://img.shields.io/badge/HACS-Custom-41BDF5?style=for-the-badge&logo=homeassistantcommunitystore&logoColor=white
 [hacs-url]: https://www.hacs.xyz/docs/faq/custom_repositories/
 [release-badge]: https://img.shields.io/github/v/release/SashaBusinaro/ha-hacs-template?style=for-the-badge&color=blue
 [release-url]: https://github.com/SashaBusinaro/ha-hacs-template/releases
-[license-badge]: https://img.shields.io/badge/License-MIT-yellow.svg
+[license-badge]: https://img.shields.io/github/license/SashaBusinaro/ha-hacs-template?style=for-the-badge
 [license-url]: https://github.com/SashaBusinaro/ha-hacs-template/blob/main/LICENSE
 
 A production-ready GitHub template for building **HACS-compatible Home Assistant custom integrations** — CI/CD, automated releases, pre-commit hooks and Dependabot pre-configured out of the box.
@@ -49,8 +52,8 @@ A production-ready GitHub template for building **HACS-compatible Home Assistant
 | `release-please-config.json` | release-please configuration |
 | `.release-please-manifest.json` | Current version tracking for release-please |
 | `CHANGELOG.md` | Auto-generated changelog (managed by release-please) |
+| `config/configuration.yaml` | HA config loaded by the devcontainer |
 | `custom_components/integration_blueprint/` | Integration source — rename to your domain |
-| `config/configuration.yaml` | HA config used by the devcontainer |
 | `scripts/develop` | Start the HA dev server |
 | `requirements.txt` | Dev / lint Python dependencies |
 | `CONTRIBUTING.md` | Contribution guidelines |
@@ -63,11 +66,17 @@ A production-ready GitHub template for building **HACS-compatible Home Assistant
 
 Click **"Use this template" → "Create a new repository"** on GitHub.
 
-> **Required GitHub setting**: go to **Settings → Actions → General** and enable
-> **"Allow GitHub Actions to create and approve pull requests"** — this is needed
-> for release-please to open Release PRs automatically.
+### 2. Enable GitHub Actions permissions
 
-### 2. Clone and install pre-commit
+release-please needs permission to open pull requests on your behalf.
+
+Go to **Settings → Actions → General** → scroll to **Workflow permissions** → enable
+**"Allow GitHub Actions to create and approve pull requests"** → click **Save**.
+
+Without this, the release-please workflow will fail with a `403` error when it tries
+to open a Release PR.
+
+### 3. Clone and install pre-commit
 
 ```bash
 git clone git@github.com:<your-user>/<your-repo>.git
@@ -79,52 +88,44 @@ pre-commit install
 
 Pre-commit will now run automatically before every `git commit`.
 
-### 3. Rename the integration domain
+### 4. Replace all placeholders
 
-Replace every occurrence of `integration_blueprint` with your integration's domain
-(e.g. `my_awesome_integration`) and rename the directory:
+The table below lists every placeholder in the template. Replace them all before
+your first push to avoid broken links, wrong debug logs and CI failures.
+
+| File | Placeholder | Replace with |
+|---|---|---|
+| `custom_components/integration_blueprint/manifest.json` | `integration_blueprint` | your integration domain, e.g. `my_integration` |
+| `custom_components/integration_blueprint/manifest.json` | `Integration blueprint` | your integration display name |
+| `custom_components/integration_blueprint/manifest.json` | `@YOUR_GITHUB_USERNAME` | your GitHub username |
+| `custom_components/integration_blueprint/manifest.json` | `YOUR_GITHUB_USERNAME/YOUR_REPO_NAME` | `your-user/your-repo` |
+| `hacs.json` | `YOUR_INTEGRATION_NAME` | your integration display name |
+| `config/configuration.yaml` | `custom_components.integration_blueprint` | `custom_components.<your_domain>` |
+| `.devcontainer.json` | `YOUR_GITHUB_USERNAME/YOUR_REPO_NAME` | `your-user/your-repo` |
+| `release-please-config.json` | `custom_components/integration_blueprint/manifest.json` | `custom_components/<your_domain>/manifest.json` |
+| `README.md` | all badge URLs containing `SashaBusinaro/ha-hacs-template` | your `user/repo` |
+
+The fastest way to replace the domain in one shot:
 
 ```bash
 # macOS
 find . -not -path './.git/*' -type f \
   | xargs grep -l "integration_blueprint" \
-  | xargs sed -i '' 's/integration_blueprint/my_awesome_integration/g'
+  | xargs sed -i '' 's/integration_blueprint/my_integration/g'
 
-mv custom_components/integration_blueprint \
-   custom_components/my_awesome_integration
+mv custom_components/integration_blueprint custom_components/my_integration
 ```
 
 ```bash
 # Linux
 find . -not -path './.git/*' -type f \
   | xargs grep -l "integration_blueprint" \
-  | xargs sed -i 's/integration_blueprint/my_awesome_integration/g'
+  | xargs sed -i 's/integration_blueprint/my_integration/g'
 
-mv custom_components/integration_blueprint \
-   custom_components/my_awesome_integration
+mv custom_components/integration_blueprint custom_components/my_integration
 ```
 
-### 4. Update manifest.json
-
-Edit `custom_components/<your_domain>/manifest.json` and fill in:
-
-```json
-{
-  "domain": "my_awesome_integration",
-  "name": "My Awesome Integration",
-  "codeowners": ["@your-github-username"],
-  "documentation": "https://github.com/your-user/your-repo",
-  "issue_tracker": "https://github.com/your-user/your-repo/issues",
-  "version": "0.1.0"
-}
-```
-
-Also update `release-please-config.json` — change the `path` under `extra-files` to point
-to your new domain:
-
-```json
-"path": "custom_components/my_awesome_integration/manifest.json"
-```
+Then open the remaining files from the table and fill in the other placeholders manually.
 
 ### 5. Start developing
 
@@ -170,7 +171,7 @@ pre-commit run --all-files
 # Run a single hook
 pre-commit run ruff --all-files
 
-# Update hooks to latest versions
+# Update hooks to latest pinned versions
 pre-commit autoupdate
 ```
 
