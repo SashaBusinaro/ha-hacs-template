@@ -1,0 +1,105 @@
+# AGENTS.md
+
+Guidance for AI agents (Claude Code, Copilot, Cursor, etc.) working in this repository.
+
+## What this repo is
+
+A GitHub template for **HACS-compatible Home Assistant custom integrations**.
+The integration source lives in `custom_components/integration_blueprint/` (rename
+to the target domain before first commit when the template is used).
+
+If `integration_blueprint` is still present after a clone, the user has not
+finished bootstrapping the template yet. Point them at `scripts/bootstrap`
+(interactive placeholder rename) before doing any real work.
+
+## Hard rules
+
+- **Write everything in English** — code, comments, docstrings, commit messages,
+  PR descriptions, documentation.
+- **Never edit `CHANGELOG.md` manually** — it is managed by `release-please`.
+- **Never bump `version` in `manifest.json` manually** — `release-please` does it.
+- **Never edit `.release-please-manifest.json`** — same reason.
+- **Use Conventional Commits** (`feat:`, `fix:`, `docs:`, `chore:`, `refactor:`,
+  `perf:`, `ci:`, `test:`). Bumps and changelog entries depend on the prefix.
+  See README "Releases (release-please)" for the bump table.
+- **Pin Ruff in both places**: `.pre-commit-config.yaml` and `requirements.txt`
+  must share the same Ruff version. Bump together.
+- **Do not commit secrets** or files under `config/` other than
+  `config/configuration.yaml` (enforced by `.gitignore`).
+
+## Project layout
+
+```text
+custom_components/integration_blueprint/   # integration source (rename on bootstrap)
+  __init__.py        # async_setup_entry / async_unload_entry — entry point
+  api.py             # API client + typed exceptions
+  config_flow.py     # UI config flow
+  coordinator.py     # DataUpdateCoordinator
+  const.py           # DOMAIN, LOGGER, attribution
+  data.py            # runtime_data dataclass + typed ConfigEntry alias
+  entity.py          # shared base entity
+  binary_sensor.py / sensor.py / switch.py   # platform entities
+  manifest.json      # HA integration metadata
+  translations/      # UI strings (en.json is canonical)
+config/              # HA dev config loaded by scripts/develop
+scripts/             # lint / develop / setup wrappers
+```
+
+## Common tasks
+
+Three shell entry points cover the dev loop:
+
+- `scripts/setup` — install dev deps (`requirements.txt`)
+- `scripts/lint` — `ruff format` + `ruff check --fix`
+- `scripts/develop` — start Home Assistant on port 8123 with the integration loaded
+
+For CI parity (no auto-fix), use `ruff check . && ruff format . --check`.
+For the full pre-commit pipeline, run `pre-commit run --all-files`.
+
+VS Code users have equivalent **tasks** (`Setup`, `Lint`, `Run Home Assistant`)
+and an **F5 debug** configuration — see README sections "Start developing"
+and "Pre-commit" for details. Do not duplicate task definitions; extend
+`.vscode/tasks.json` if a new common task is genuinely needed.
+
+## Adding a new platform / entity type
+
+1. Create `custom_components/<domain>/<platform>.py`.
+2. Subclass the relevant HA entity (e.g. `SensorEntity`) and the shared
+   `IntegrationBlueprintEntity` in `entity.py` for coordinator wiring.
+3. Append the `Platform` enum value to the `PLATFORMS` list in `__init__.py`.
+4. Add translation keys to `translations/en.json` if the entity is user-facing.
+
+## Validation
+
+CI runs three workflows on every push and PR (see `.github/workflows/`):
+
+- **lint.yml** — `ruff check` + `ruff format --check` on Python 3.14.
+- **validate.yml** — `hassfest` (manifest, structure, translations) and HACS
+  validation. Runs daily on cron too.
+- **release-please.yml** — opens / updates the Release PR on `main`. Requires
+  the repo setting *"Allow GitHub Actions to create and approve pull requests"*.
+
+A change that touches `manifest.json`, `hacs.json`, or `translations/` will fail
+fast if the JSON shape is wrong — fix locally with `pre-commit run --all-files`
+before pushing.
+
+## Ruff configuration
+
+Defined in `.ruff.toml`, deliberately mirroring `home-assistant/core`
+(`target-version = "py314"`, `select = ["ALL"]`, narrow `ignore` list). Do not
+relax rules globally — prefer `# noqa: <code>` with a one-line justification
+when a single line genuinely needs to break a rule.
+
+## Dependencies
+
+- `requirements.txt` is the single source of truth for dev / CI deps.
+  Dependabot updates it weekly with grouped PRs (see `.github/dependabot.yml`).
+- `homeassistant` is **excluded** from Dependabot — it must stay in sync with
+  the `homeassistant` key in `hacs.json`. Bump them together manually.
+
+## When in doubt
+
+- Match patterns already in the repo before introducing new ones.
+- Prefer editing existing files over creating new ones.
+- Keep the template lightweight — every added file is friction for a first-time
+  user. Only add what materially improves a common workflow.

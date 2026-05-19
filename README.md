@@ -1,15 +1,12 @@
 # ha-hacs-template
 
 [![Validate][validate-badge]][validate-url]
-[![Lint][lint-badge]][lint-url]
 [![HACS Custom][hacs-badge]][hacs-url]
 [![Release][release-badge]][release-url]
 [![License][license-badge]][license-url]
 
 [validate-badge]: https://img.shields.io/github/actions/workflow/status/SashaBusinaro/ha-hacs-template/validate.yml?style=for-the-badge&label=Validate
 [validate-url]: https://github.com/SashaBusinaro/ha-hacs-template/actions/workflows/validate.yml
-[lint-badge]: https://img.shields.io/github/actions/workflow/status/SashaBusinaro/ha-hacs-template/lint.yml?style=for-the-badge&label=Lint
-[lint-url]: https://github.com/SashaBusinaro/ha-hacs-template/actions/workflows/lint.yml
 [hacs-badge]: https://img.shields.io/badge/HACS-Custom-41BDF5?style=for-the-badge&logo=homeassistantcommunitystore&logoColor=white
 [hacs-url]: https://www.hacs.xyz/docs/faq/custom_repositories/
 [release-badge]: https://img.shields.io/github/v/release/SashaBusinaro/ha-hacs-template?style=for-the-badge&color=blue
@@ -42,18 +39,25 @@ A production-ready GitHub template for building **HACS-compatible Home Assistant
 | File / Directory | Purpose |
 |---|---|
 | `.devcontainer.json` | VS Code dev container — live HA instance for testing |
+| `.editorconfig` | Editor-agnostic indentation and EOL rules |
 | `.github/dependabot.yml` | Automated dependency updates (weekly, grouped) |
 | `.github/ISSUE_TEMPLATE/*.yml` | Bug report and feature request templates |
+| `.github/PULL_REQUEST_TEMPLATE.md` | Pull request checklist (Conventional Commits) |
 | `.github/workflows/lint.yml` | Ruff lint + format check |
 | `.github/workflows/validate.yml` | hassfest and HACS validation |
 | `.github/workflows/release-please.yml` | Automated releases via Conventional Commits |
-| `.pre-commit-config.yaml` | Pre-commit hooks (JSON/YAML checks + Ruff) |
+| `.pre-commit-config.yaml` | Pre-commit hooks (JSON/YAML, Ruff, codespell) |
 | `.ruff.toml` | Ruff configuration (aligned with HA Core) |
+| `.vscode/extensions.json` | Recommended VS Code extensions (mirrors devcontainer) |
+| `.vscode/launch.json` | F5 debug configuration for Home Assistant |
+| `.vscode/tasks.json` | VS Code tasks for Setup / Lint / Run Home Assistant |
 | `release-please-config.json` | release-please configuration |
 | `.release-please-manifest.json` | Current version tracking for release-please |
+| `AGENTS.md` | Guidance for AI agents working in this repo |
 | `CHANGELOG.md` | Auto-generated changelog (managed by release-please) |
 | `config/configuration.yaml` | HA config loaded by the devcontainer |
 | `custom_components/integration_blueprint/` | Integration source — rename to your domain |
+| `scripts/bootstrap` | Interactive one-shot placeholder rename — run once after creating the repo |
 | `scripts/develop` | Start the HA dev server |
 | `requirements.txt` | Dev / lint Python dependencies |
 | `CONTRIBUTING.md` | Contribution guidelines |
@@ -90,42 +94,24 @@ Pre-commit will now run automatically before every `git commit`.
 
 ### 4. Replace all placeholders
 
-The table below lists every placeholder in the template. Replace them all before
-your first push to avoid broken links, wrong debug logs and CI failures.
-
-| File | Placeholder | Replace with |
-|---|---|---|
-| `custom_components/integration_blueprint/manifest.json` | `integration_blueprint` | your integration domain, e.g. `my_integration` |
-| `custom_components/integration_blueprint/manifest.json` | `Integration blueprint` | your integration display name |
-| `custom_components/integration_blueprint/manifest.json` | `@YOUR_GITHUB_USERNAME` | your GitHub username |
-| `custom_components/integration_blueprint/manifest.json` | `YOUR_GITHUB_USERNAME/YOUR_REPO_NAME` | `your-user/your-repo` |
-| `hacs.json` | `YOUR_INTEGRATION_NAME` | your integration display name |
-| `config/configuration.yaml` | `custom_components.integration_blueprint` | `custom_components.<your_domain>` |
-| `.devcontainer.json` | `YOUR_GITHUB_USERNAME/YOUR_REPO_NAME` | `your-user/your-repo` |
-| `release-please-config.json` | `custom_components/integration_blueprint/manifest.json` | `custom_components/<your_domain>/manifest.json` |
-| `README.md` | all badge URLs containing `SashaBusinaro/ha-hacs-template` | your `user/repo` |
-
-The fastest way to replace the domain in one shot:
+Run the interactive bootstrap script — it prompts for domain, display name,
+GitHub user and repo, then rewrites every placeholder and renames the
+integration directory in one shot:
 
 ```bash
-# macOS
-find . -not -path './.git/*' -type f \
-  | xargs grep -l "integration_blueprint" \
-  | xargs sed -i '' 's/integration_blueprint/my_integration/g'
-
-mv custom_components/integration_blueprint custom_components/my_integration
+scripts/bootstrap
 ```
 
-```bash
-# Linux
-find . -not -path './.git/*' -type f \
-  | xargs grep -l "integration_blueprint" \
-  | xargs sed -i 's/integration_blueprint/my_integration/g'
+Placeholders rewritten by the script (also useful if you prefer a manual rename):
 
-mv custom_components/integration_blueprint custom_components/my_integration
-```
-
-Then open the remaining files from the table and fill in the other placeholders manually.
+| Placeholder | Replace with |
+|---|---|
+| `integration_blueprint` | your integration domain, e.g. `my_integration` |
+| `Integration blueprint` | your integration display name |
+| `YOUR_INTEGRATION_NAME` | your integration display name |
+| `YOUR_GITHUB_USERNAME` | your GitHub username |
+| `YOUR_REPO_NAME` | your GitHub repository name |
+| `SashaBusinaro/ha-hacs-template` | `your-user/your-repo` (badge URLs in this README) |
 
 ### 5. Start developing
 
@@ -133,7 +119,13 @@ Open the repository in VS Code and choose
 **"Dev Containers: Reopen in Container"** to get a full Home Assistant instance running
 locally with your integration already loaded.
 
-Or run the dev server directly:
+VS Code is pre-configured with:
+
+- **Run task → "Run Home Assistant"** to start the dev server.
+- **F5 → "Home Assistant"** to launch HA under the debugger (breakpoints work in `custom_components/`).
+- **Run task → "Lint"** to run Ruff format + check with auto-fix.
+
+Or run the dev server directly from the shell:
 
 ```bash
 scripts/develop
@@ -157,6 +149,7 @@ before they reach CI.
 | `check-merge-conflict` | Blocks accidental merge-conflict markers |
 | `ruff` | Lints Python and auto-fixes safe issues |
 | `ruff-format` | Formats Python code |
+| `codespell` | Catches common typos in code, comments and docs |
 
 ### Common commands
 
