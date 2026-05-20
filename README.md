@@ -55,7 +55,8 @@ A production-ready GitHub template for building **HACS-compatible Home Assistant
 | `CHANGELOG.md` | Auto-generated changelog (managed by release-please) |
 | `config/configuration.yaml` | HA config loaded by the devcontainer |
 | `custom_components/integration_blueprint/` | Integration source — rename to your domain |
-| `scripts/develop` | Start the HA dev server |
+| `hacs.json` | HACS metadata (integration name, minimum HA version) |
+| `scripts/` | Helper scripts: `setup` (install deps), `lint` (format + check), `develop` (run HA) |
 | `requirements.txt` | Dev / lint Python dependencies |
 | `CONTRIBUTING.md` | Contribution guidelines |
 
@@ -77,7 +78,13 @@ Go to **Settings → Actions → General** → scroll to **Workflow permissions*
 Without this, the release-please workflow will fail with a `403` error when it tries
 to open a Release PR.
 
-### 3. Clone and install pre-commit
+### 3. Add the HACS-required repository topics
+
+HACS validation fails until the repository carries at least one of the recognised
+topics. Add them from the GitHub UI (**top of the repo page → ⚙️ next to "About"
+→ Topics**).
+
+### 4. Clone and install pre-commit
 
 ```bash
 git clone git@github.com:<your-user>/<your-repo>.git
@@ -89,7 +96,7 @@ pre-commit install
 
 Pre-commit will now run automatically before every `git commit`.
 
-### 4. Replace the placeholders
+### 5. Replace the placeholders
 
 Use your editor's "Find in Files" (VS Code: `Cmd+Shift+F` / `Ctrl+Shift+F`) to
 replace every occurrence of the tokens below across the whole repository.
@@ -115,12 +122,6 @@ git mv custom_components/integration_blueprint "custom_components/<your-domain>"
 
 You can delete this entire section from your README once the substitution is
 complete — it only exists to drive the one-off setup.
-
-### 5. Add the HACS-required repository topics
-
-HACS validation fails until the repository carries at least one of the recognised
-topics. Add them from the GitHub UI (**top of the repo page → ⚙️ next to "About"
-→ Topics**).
 
 ### 6. Start developing
 
