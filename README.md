@@ -246,12 +246,11 @@ the `homeassistant` key in `hacs.json`. Bump them together manually.
 
 ## Keeping your fork in sync with the template
 
-When the upstream template gets improvements you'd like to pull in, add it as
-a `template` remote and merge selectively (replace the URL with the template
-repository you cloned from):
+When the upstream template gets improvements you'd like to pull in, add it
+as a `template` remote and merge selectively:
 
 ```bash
-git remote add template https://github.com/<template-owner>/<template-repo>.git
+git remote add template https://github.com/SashaBusinaro/ha-hacs-template.git
 git fetch template
 git merge template/main --no-ff --allow-unrelated-histories
 ```

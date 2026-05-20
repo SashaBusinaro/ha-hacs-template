@@ -7,6 +7,11 @@ set -e
 
 cd "$(dirname "$0")/.."
 
+# Upstream template repo. Preserved in README under "Keeping your fork in sync
+# with the template" so the `git remote add template ...` command keeps working
+# after the global rename. Update this if you fork the template.
+TEMPLATE_REPO="SashaBusinaro/ha-hacs-template"
+
 if [[ ! -d "custom_components/integration_blueprint" ]]; then
     echo "Error: custom_components/integration_blueprint not found."
     echo "This template appears to be already bootstrapped — nothing to do."
@@ -47,7 +52,12 @@ replace "Integration blueprint" "$NAME"
 replace "YOUR_INTEGRATION_NAME" "$NAME"
 replace "YOUR_GITHUB_USERNAME" "$GH_USER"
 replace "YOUR_REPO_NAME" "$GH_REPO"
-replace "SashaBusinaro/ha-hacs-template" "$GH_USER/$GH_REPO"
+replace "$TEMPLATE_REPO" "$GH_USER/$GH_REPO"
+
+# The line above renamed the upstream template URL inside the README's
+# "Keeping your fork in sync" section. Restore it: the `.git` suffix is the
+# marker (badge URLs in this template never end in `.git`).
+"${SED_INPLACE[@]}" "s|$GH_USER/$GH_REPO\\.git|$TEMPLATE_REPO.git|g" README.md 2>/dev/null || true
 
 mv custom_components/integration_blueprint "custom_components/$DOMAIN"
 
