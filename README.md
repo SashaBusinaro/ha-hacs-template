@@ -84,16 +84,15 @@ HACS validation fails until the repository carries at least one of the recognise
 topics. Add them from the GitHub UI (**top of the repo page → ⚙️ next to "About"
 → Topics**).
 
-### 4. Clone and install pre-commit
+### 4. Clone and run setup
 
 ```bash
 git clone git@github.com:<your-user>/<your-repo>.git
 cd <your-repo>
-
-pip install pre-commit
-pre-commit install
+scripts/setup
 ```
 
+This creates a `venv/`, installs all dependencies, and installs the pre-commit hooks.
 Pre-commit will now run automatically before every `git commit`.
 
 ### 5. Replace the placeholders
@@ -141,15 +140,8 @@ Or run the dev server directly from the shell:
 scripts/develop
 ```
 
-> Outside the devcontainer, create a virtualenv first so Home Assistant and
-> its dependencies don't pollute your system Python:
->
-> ```bash
-> python3.14 -m venv .venv
-> source .venv/bin/activate
-> scripts/setup
-> scripts/develop
-> ```
+`scripts/develop` automatically activates the `venv/` created by `scripts/setup`,
+so no manual activation is needed.
 
 ---
 
@@ -174,9 +166,8 @@ before they reach CI.
 ### Common commands
 
 ```bash
-# Install hooks (once per clone)
-pip install pre-commit
-pre-commit install
+# Install hooks (once per clone — handled by scripts/setup)
+scripts/setup
 
 # Run manually on all files
 pre-commit run --all-files
