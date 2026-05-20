@@ -131,6 +131,16 @@ Or run the dev server directly from the shell:
 scripts/develop
 ```
 
+> Outside the devcontainer, create a virtualenv first so Home Assistant and
+> its dependencies don't pollute your system Python:
+>
+> ```bash
+> python3.14 -m venv .venv
+> source .venv/bin/activate
+> scripts/setup
+> scripts/develop
+> ```
+
 ---
 
 ## Pre-commit
