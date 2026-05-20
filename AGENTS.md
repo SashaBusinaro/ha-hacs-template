@@ -51,9 +51,9 @@ scripts/             # lint / develop / setup wrappers
 
 Three shell entry points cover the dev loop:
 
-- `scripts/setup` — create `venv/`, install dev deps (`requirements.txt`), install pre-commit hooks
-- `scripts/lint` — activate venv, run `pre-commit run --all-files` (same pipeline as CI)
-- `scripts/develop` — activate venv, start Home Assistant on port 8123 with the integration loaded
+- `scripts/setup` — create `venv/` (recreates it on platform mismatch), install dev deps (`requirements.txt`), install pre-commit hooks
+- `scripts/lint` — auto-calls `scripts/setup` if the venv is missing or invalid, then runs `pre-commit run --all-files` (same pipeline as CI)
+- `scripts/develop` — auto-calls `scripts/setup` if the venv is missing or invalid, then starts Home Assistant on port 8123 with the integration loaded
 
 For CI parity, `scripts/lint` and the `lint.yml` workflow both run `pre-commit run --all-files` — no separate ruff invocation needed.
 
