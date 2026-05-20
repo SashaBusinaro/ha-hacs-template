@@ -244,6 +244,23 @@ the `homeassistant` key in `hacs.json`. Bump them together manually.
 
 ---
 
+## Keeping your fork in sync with the template
+
+When the upstream template gets improvements you'd like to pull in, add it as
+a `template` remote and merge selectively (replace the URL with the template
+repository you cloned from):
+
+```bash
+git remote add template https://github.com/<template-owner>/<template-repo>.git
+git fetch template
+git merge template/main --no-ff --allow-unrelated-histories
+```
+
+Resolve conflicts on the files you've customized (typically `manifest.json`,
+`hacs.json`, `README.md`, `custom_components/<domain>/`), then commit.
+
+---
+
 ## Next steps
 
 - Add **tests** using [`pytest-homeassistant-custom-component`](https://github.com/MatthewFlamm/pytest-homeassistant-custom-component)
