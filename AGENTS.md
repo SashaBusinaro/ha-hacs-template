@@ -51,12 +51,11 @@ scripts/             # lint / develop / setup wrappers
 
 Three shell entry points cover the dev loop:
 
-- `scripts/setup` — install dev deps (`requirements.txt`)
-- `scripts/lint` — `ruff format` + `ruff check --fix`
-- `scripts/develop` — start Home Assistant on port 8123 with the integration loaded
+- `scripts/setup` — create `venv/`, install dev deps (`requirements.txt`), install pre-commit hooks
+- `scripts/lint` — activate venv, run `pre-commit run --all-files` (same pipeline as CI)
+- `scripts/develop` — activate venv, start Home Assistant on port 8123 with the integration loaded
 
-For CI parity (no auto-fix), use `ruff check . && ruff format . --check`.
-For the full pre-commit pipeline, run `pre-commit run --all-files`.
+For CI parity, `scripts/lint` and the `lint.yml` workflow both run `pre-commit run --all-files` — no separate ruff invocation needed.
 
 VS Code users have equivalent **tasks** (`Setup`, `Lint`, `Run Home Assistant`)
 and an **F5 debug** configuration — see README sections "Start developing"
@@ -114,6 +113,13 @@ CI runs three workflows on every push and PR (see `.github/workflows/`):
 A change that touches `manifest.json`, `hacs.json`, or `translations/` will fail
 fast if the JSON shape is wrong — fix locally with `pre-commit run --all-files`
 before pushing.
+
+## Python 3.14 syntax
+
+The template targets Python 3.14 (`target-version = "py314"` in `.ruff.toml`). Do not flag 3.14-native syntax as an issue or suggest workarounds for older versions.
+
+- **PEP 649 — lazy annotations**: forward references in annotations do not need to be quoted and `from __future__ import annotations` is not required. Names defined later in the module can be referenced in annotations without quoting.
+- **`except TypeA, TypeB:`** without parentheses is valid Python 3.14 syntax.
 
 ## Ruff configuration
 
