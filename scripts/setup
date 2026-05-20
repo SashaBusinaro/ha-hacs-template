@@ -4,6 +4,10 @@ set -e
 
 cd "$(dirname "$0")/.."
 
-python3 -m pip install --requirement requirements.txt
-pip install pre-commit
-pre-commit install
+if [ ! -d "venv" ]; then
+    python3 -m venv venv
+fi
+
+venv/bin/pip install --requirement requirements.txt
+venv/bin/pip install pre-commit
+venv/bin/pre-commit install

@@ -4,4 +4,7 @@ set -e
 
 cd "$(dirname "$0")/.."
 
+# shellcheck source=/dev/null
+source venv/bin/activate
+
 pre-commit run --all-files

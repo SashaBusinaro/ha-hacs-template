@@ -21,6 +21,7 @@
                 "ryanluker.vscode-coverage-gutters"
             ],
             "settings": {
+                "python.defaultInterpreterPath": "${containerWorkspaceFolder}/venv/bin/python",
                 "files.eol": "\n",
                 "editor.tabSize": 4,
                 "editor.formatOnPaste": true,
