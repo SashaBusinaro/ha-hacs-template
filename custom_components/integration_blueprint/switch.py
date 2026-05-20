@@ -18,7 +18,7 @@ PARALLEL_UPDATES = 1
 
 ENTITY_DESCRIPTIONS = (
     SwitchEntityDescription(
-        key="integration_blueprint",
+        key="example_switch",
         name="Integration Switch",
         icon="mdi:format-quote-close",
     ),

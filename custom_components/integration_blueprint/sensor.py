@@ -16,6 +16,9 @@ if TYPE_CHECKING:
 
 PARALLEL_UPDATES = 1
 
+# NOTE: each EntityDescription `key` becomes part of the entity's unique_id
+# (`{entry_id}_{key}`), so it MUST be unique within a config entry. If you add
+# a second sensor here, give it a different key.
 # NOTE: the example sensor returns a string (`body` from JSONPlaceholder).
 # For numeric sensors set `device_class`, `state_class` and
 # `native_unit_of_measurement` on the EntityDescription — this enables unit
@@ -23,7 +26,7 @@ PARALLEL_UPDATES = 1
 # https://developers.home-assistant.io/docs/core/entity/sensor
 ENTITY_DESCRIPTIONS = (
     SensorEntityDescription(
-        key="integration_blueprint",
+        key="example_sensor",
         name="Integration Sensor",
         icon="mdi:format-quote-close",
     ),

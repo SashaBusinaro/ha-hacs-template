@@ -53,6 +53,7 @@ mv custom_components/integration_blueprint "custom_components/$DOMAIN"
 
 echo
 echo "Done. Next steps:"
-echo "  1. Review the diff: git diff && git status"
-echo "  2. Install pre-commit hooks: pip install pre-commit && pre-commit install"
-echo "  3. Commit:  git add -A && git commit -m 'chore: bootstrap from template'"
+echo "  1. Review the diff:           git diff && git status"
+echo "  2. Install pre-commit hooks:  pip install pre-commit && pre-commit install"
+echo "  3. Stage and commit:          git add -A && git commit -m 'chore: bootstrap from template'"
+echo "     (pre-commit runs automatically on the staged files at commit time)"
