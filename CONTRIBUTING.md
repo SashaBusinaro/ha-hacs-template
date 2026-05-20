@@ -48,13 +48,10 @@ Use [Ruff](https://docs.astral.sh/ruff/) to make sure the code follows the style
 
 ## Test your code modification
 
-This custom component is based on [ha-hacs-template](https://github.com/SashaBusinaro/ha-hacs-template).
-
-It comes with development environment in a container, easy to launch
-if you use Visual Studio Code. With this container you will have a stand alone
-Home Assistant instance running and already configured with the included
-[`configuration.yaml`](./config/configuration.yaml)
-file.
+This project ships with a containerised development environment. Open the
+repository in Visual Studio Code and choose **"Dev Containers: Reopen in
+Container"** to get a standalone Home Assistant instance running, already
+configured with the included [`configuration.yaml`](./config/configuration.yaml).
 
 ## License
 

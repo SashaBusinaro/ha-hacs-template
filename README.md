@@ -16,8 +16,6 @@
 
 A production-ready GitHub template for building **HACS-compatible Home Assistant custom integrations** — CI/CD, automated releases, pre-commit hooks and Dependabot pre-configured out of the box.
 
-> Based on the excellent [integration_blueprint](https://github.com/ludeeus/integration_blueprint) by [@ludeeus](https://github.com/ludeeus).
-
 ---
 
 ## What's included
