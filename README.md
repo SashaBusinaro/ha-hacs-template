@@ -55,7 +55,6 @@ A production-ready GitHub template for building **HACS-compatible Home Assistant
 | `CHANGELOG.md` | Auto-generated changelog (managed by release-please) |
 | `config/configuration.yaml` | HA config loaded by the devcontainer |
 | `custom_components/integration_blueprint/` | Integration source — rename to your domain |
-| `scripts/bootstrap` | Interactive one-shot placeholder rename — run once after creating the repo |
 | `scripts/develop` | Start the HA dev server |
 | `requirements.txt` | Dev / lint Python dependencies |
 | `CONTRIBUTING.md` | Contribution guidelines |
@@ -90,28 +89,40 @@ pre-commit install
 
 Pre-commit will now run automatically before every `git commit`.
 
-### 4. Replace all placeholders
+### 4. Replace the placeholders
 
-Run the interactive bootstrap script — it prompts for domain, display name,
-GitHub user and repo, then rewrites every placeholder and renames the
-integration directory in one shot:
+Use your editor's "Find in Files" (VS Code: `Cmd+Shift+F` / `Ctrl+Shift+F`) to
+replace every occurrence of the tokens below across the whole repository.
 
-```bash
-scripts/bootstrap
-```
-
-Placeholders rewritten by the script (also useful if you prefer a manual rename):
+<!-- placeholders-ssot:start -->
 
 | Placeholder | Replace with |
 |---|---|
-| `integration_blueprint` | your integration domain, e.g. `my_integration` |
-| `Integration blueprint` | your integration display name |
+| `integration_blueprint` | your integration domain (lowercase, pattern `[a-z][a-z0-9_]*`), e.g. `my_integration` |
+| `Integration blueprint` | your integration display name, e.g. `My Integration` |
 | `YOUR_INTEGRATION_NAME` | your integration display name |
 | `YOUR_GITHUB_USERNAME` | your GitHub username |
 | `YOUR_REPO_NAME` | your GitHub repository name |
-| `SashaBusinaro/ha-hacs-template` | `your-user/your-repo` (badge URLs in this README) |
+| `SashaBusinaro/ha-hacs-template` | `<your-user>/<your-repo>` — **skip the URL ending in `.git`** in the "Keeping your fork in sync" section below; that one must keep pointing at the upstream template |
 
-### 5. Start developing
+<!-- placeholders-ssot:end -->
+
+Then rename the integration directory to match the new domain:
+
+```bash
+git mv custom_components/integration_blueprint "custom_components/<your-domain>"
+```
+
+You can delete this entire section from your README once the substitution is
+complete — it only exists to drive the one-off setup.
+
+### 5. Add the HACS-required repository topics
+
+HACS validation fails until the repository carries at least one of the recognised
+topics. Add them from the GitHub UI (**top of the repo page → ⚙️ next to "About"
+→ Topics**).
+
+### 6. Start developing
 
 Open the repository in VS Code and choose
 **"Dev Containers: Reopen in Container"** to get a full Home Assistant instance running

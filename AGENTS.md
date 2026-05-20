@@ -9,8 +9,10 @@ The integration source lives in `custom_components/integration_blueprint/` (rena
 to the target domain before first commit when the template is used).
 
 If `integration_blueprint` is still present after a clone, the user has not
-finished bootstrapping the template yet. Point them at `scripts/bootstrap`
-(interactive placeholder rename) before doing any real work.
+finished bootstrapping the template yet. Point them at the **placeholder table
+in `README.md`** (single source of truth — under "Replace the placeholders") and
+walk them through the find-and-replace + `git mv` before doing any real work.
+Do not duplicate the placeholder list here; keep `README.md` authoritative.
 
 ## Hard rules
 
@@ -30,7 +32,7 @@ finished bootstrapping the template yet. Point them at `scripts/bootstrap`
 ## Project layout
 
 ```text
-custom_components/integration_blueprint/   # integration source (rename on bootstrap)
+custom_components/integration_blueprint/   # integration source (rename per README placeholder table)
   __init__.py        # async_setup_entry / async_unload_entry — entry point
   api.py             # API client + typed exceptions
   config_flow.py     # UI config flow
@@ -60,6 +62,36 @@ VS Code users have equivalent **tasks** (`Setup`, `Lint`, `Run Home Assistant`)
 and an **F5 debug** configuration — see README sections "Start developing"
 and "Pre-commit" for details. Do not duplicate task definitions; extend
 `.vscode/tasks.json` if a new common task is genuinely needed.
+
+## Bootstrap repo setup (CLI helpers)
+
+Two one-off actions are documented as manual steps in `README.md`. When the user
+has the GitHub CLI available, run them as:
+
+```bash
+# Replace OWNER/REPO with the freshly bootstrapped repo
+OWNER=your-github-username
+REPO=your-repo-name
+
+# 1. Allow release-please to open the Release PR
+#    (equivalent to ticking "Allow GitHub Actions to create and approve pull
+#    requests" under Settings → Actions → General → Workflow permissions)
+gh api -X PUT "/repos/$OWNER/$REPO/actions/permissions/workflow" \
+  -F default_workflow_permissions=write \
+  -F can_approve_pull_request_reviews=true
+
+# 2. Add the HACS-required repository topics (HACS validation fails without them)
+gh repo edit "$OWNER/$REPO" \
+  --add-topic home-assistant \
+  --add-topic hacs \
+  --add-topic home-assistant-custom \
+  --add-topic integration
+```
+
+Run both after the placeholder substitution and the first push. Without (1) the
+release-please workflow fails with `403` when it tries to open a PR; without (2)
+the `Validate` workflow's HACS job fails with
+`<Validation topics> failed: The repository has no valid topics`.
 
 ## Adding a new platform / entity type
 
