@@ -134,6 +134,9 @@ when a single line genuinely needs to break a rule.
   Dependabot updates it weekly with grouped PRs (see `.github/dependabot.yml`).
 - `homeassistant` is **excluded** from Dependabot — it must stay in sync with
   the `homeassistant` key in `hacs.json`. Bump them together manually.
+  When bumping the minimum HA version, update all three places in lockstep:
+  `hacs.json → homeassistant`, `requirements.txt → homeassistant==`, and the
+  `## Requirements` section in `README.md`.
 
 ## Extension points
 
