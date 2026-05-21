@@ -18,6 +18,52 @@ A production-ready GitHub template for building **HACS-compatible Home Assistant
 
 ---
 
+## Installation
+
+### Step 1: Install the Integration
+
+**Prerequisites:** This integration requires [HACS](https://hacs.xyz/) (Home Assistant Community Store) to be installed.
+
+Click the button below to open the integration directly in HACS:
+
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=YOUR_GITHUB_USERNAME&repository=YOUR_REPO_NAME&category=integration)
+
+Then:
+
+1. Click "Download" to install the integration
+2. **Restart Home Assistant** (required after installation)
+
+> [!NOTE]
+> The My Home Assistant redirect will first take you to a landing page. Click the button there to open your Home Assistant instance.
+
+<details>
+<summary><strong>Manual Installation (Advanced)</strong></summary>
+
+If you prefer not to use HACS:
+
+1. Download the `custom_components/integration_blueprint/` folder from this repository
+2. Copy it to your Home Assistant's `custom_components/` directory
+3. Restart Home Assistant
+
+</details>
+
+### Step 2: Configure the Integration
+
+**Important:** Complete Step 1 and restart Home Assistant before proceeding.
+
+#### Option 1: One-Click Setup
+
+[![Open your Home Assistant instance and start setting up a new integration.](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start/?domain=integration_blueprint)
+
+#### Option 2: Manual Setup
+
+1. Go to **Settings** → **Devices & Services**
+2. Click **"+ Add Integration"**
+3. Search for "YOUR_INTEGRATION_NAME"
+4. Follow the setup wizard
+
+---
+
 ## What's included
 
 | Tool | What it does |
