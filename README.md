@@ -265,14 +265,20 @@ feat!: drop support for HA < 2025.1
 chore(deps): update ruff to v0.12.0
 ```
 
-### Pre-major versioning
+### First release — v1.0.0
 
-While the version is below `1.0.0`:
-- `feat:` bumps the **patch** (e.g. `0.1.0` → `0.1.1`)
-- `feat!:` bumps the **minor** (e.g. `0.1.0` → `0.2.0`)
+To produce exactly `v1.0.0` as your first release, add `Release-As: 1.0.0` to
+the footer of any commit pushed to `main` before merging the first Release PR:
 
-This matches the `bump-minor-pre-major` / `bump-patch-for-minor-pre-major` flags
-set in `release-please-config.json`. Remove them once you reach `1.0.0`.
+```
+feat: implement sensor platform
+
+Release-As: 1.0.0
+```
+
+release-please will accumulate all changes since the beginning and open a
+Release PR that produces exactly `v1.0.0`, regardless of which commit types
+were used.
 
 ---
 
