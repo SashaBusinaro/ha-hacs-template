@@ -124,11 +124,14 @@ Go to **Settings → Actions → General** → scroll to **Workflow permissions*
 Without this, the release-please workflow will fail with a `403` error when it tries
 to open a Release PR.
 
-### 3. Add the HACS-required repository topics
+### 3. Add the HACS-required repository metadata
 
-HACS validation fails until the repository carries at least one of the recognised
-topics. Add them from the GitHub UI (**top of the repo page → ⚙️ next to "About"
-→ Topics**).
+HACS validation requires both a **description** and at least one recognised topic.
+
+From the GitHub UI (**top of the repo page → ⚙️ next to "About"**):
+
+- **Description** — fill in the "Description" field (HACS will reject the repository without one).
+- **Topics** — add at least one of: `home-assistant`, `hacs`, `home-assistant-custom`, `integration`.
 
 ### 4. Clone and run setup
 

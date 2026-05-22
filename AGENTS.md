@@ -33,8 +33,9 @@ gh api -X PUT "/repos/$OWNER/$REPO/actions/permissions/workflow" \
   -F default_workflow_permissions=write \
   -F can_approve_pull_request_reviews=true
 
-# Add the HACS-required repository topics
+# Add the HACS-required description and topics
 gh repo edit "$OWNER/$REPO" \
+  --description "A short description of your integration" \
   --add-topic home-assistant \
   --add-topic hacs \
   --add-topic home-assistant-custom \
@@ -42,7 +43,8 @@ gh repo edit "$OWNER/$REPO" \
 ```
 
 Without step 1: release-please fails with `403` when opening a Release PR.
-Without step 2: the `Validate` workflow's HACS job fails with
+Without step 2: the `Validate` workflow's HACS job fails — a missing description
+causes `<Validation description> failed` and missing topics cause
 `<Validation topics> failed: The repository has no valid topics`.
 
 ### 3. Run setup
