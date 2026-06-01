@@ -47,7 +47,16 @@ Without step 2: the `Validate` workflow's HACS job fails — a missing descripti
 causes `<Validation description> failed` and missing topics cause
 `<Validation topics> failed: The repository has no valid topics`.
 
-### 3. Run setup
+### 3. Add brand images
+
+Create a `brand/` directory in the repository root and add at least `icon.png`
+(256×256 px, transparent background). See the
+[HA brand image guide](https://developers.home-assistant.io/docs/creating_integration_file_structure#local-brand-images-for-custom-integrations)
+for the full spec. Once the images are committed, remove the `ignore: brands`
+line from `.github/workflows/validate.yml` so the HACS validation job enforces
+the check going forward.
+
+### 4. Run setup
 
 ```bash
 scripts/setup
