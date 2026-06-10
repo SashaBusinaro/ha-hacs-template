@@ -17,6 +17,9 @@ PARALLEL_UPDATES = 1
 # NOTE: each EntityDescription `key` becomes part of the entity's unique_id
 # (`{entry_id}_{key}`), so it MUST be unique within a config entry. If you add
 # a second sensor here, give it a different key.
+# NOTE: `translation_key` points at `entity.sensor.<key>` in
+# translations/en.json — entity names live there, not in Python.
+# https://developers.home-assistant.io/docs/core/entity#generic-properties
 # NOTE: the example sensor returns a string (`body` from JSONPlaceholder).
 # For numeric sensors set `device_class`, `state_class` and
 # `native_unit_of_measurement` on the EntityDescription — this enables unit
@@ -25,7 +28,7 @@ PARALLEL_UPDATES = 1
 ENTITY_DESCRIPTIONS = (
     SensorEntityDescription(
         key="example_sensor",
-        name="Integration Sensor",
+        translation_key="example_sensor",
         icon="mdi:format-quote-close",
     ),
 )

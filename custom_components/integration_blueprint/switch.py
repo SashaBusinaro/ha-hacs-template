@@ -17,7 +17,7 @@ PARALLEL_UPDATES = 1
 ENTITY_DESCRIPTIONS = (
     SwitchEntityDescription(
         key="example_switch",
-        name="Integration Switch",
+        translation_key="example_switch",
         icon="mdi:format-quote-close",
     ),
 )

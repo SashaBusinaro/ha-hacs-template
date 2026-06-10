@@ -21,7 +21,7 @@ PARALLEL_UPDATES = 1
 ENTITY_DESCRIPTIONS = (
     BinarySensorEntityDescription(
         key="example_binary_sensor",
-        name="Integration Binary Sensor",
+        translation_key="example_binary_sensor",
         device_class=BinarySensorDeviceClass.CONNECTIVITY,
     ),
 )

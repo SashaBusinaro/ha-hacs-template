@@ -21,5 +21,22 @@
         "abort": {
             "already_configured": "This entry is already configured."
         }
+    },
+    "entity": {
+        "sensor": {
+            "example_sensor": {
+                "name": "Integration Sensor"
+            }
+        },
+        "binary_sensor": {
+            "example_binary_sensor": {
+                "name": "Integration Binary Sensor"
+            }
+        },
+        "switch": {
+            "example_switch": {
+                "name": "Integration Switch"
+            }
+        }
     }
 }
