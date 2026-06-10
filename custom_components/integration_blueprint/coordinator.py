@@ -19,7 +19,10 @@ if TYPE_CHECKING:
 # refresh — e.g. fetching static device metadata (firmware version, model) so
 # entity.py can pass it to DeviceInfo.
 # https://developers.home-assistant.io/docs/integration_fetching_data#coordinated-single-api-poll-for-data-for-all-entities
-class BlueprintDataUpdateCoordinator(DataUpdateCoordinator):
+# NOTE: `Any` is the coordinator data type. Once your API client returns a
+# typed object (dataclass/TypedDict), substitute it here and in
+# `_async_update_data` so entities get typed `coordinator.data`.
+class BlueprintDataUpdateCoordinator(DataUpdateCoordinator[Any]):
     """Class to manage fetching data from the API."""
 
     config_entry: IntegrationBlueprintConfigEntry
