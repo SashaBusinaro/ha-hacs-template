@@ -70,8 +70,8 @@ If you prefer not to use HACS:
 |---|---|
 | **hassfest** | Validates `manifest.json`, translations and component structure on every push |
 | **HACS validation** | Checks that the integration meets [HACS requirements](https://hacs.xyz/docs/publish/requirements) |
-| **Ruff** (CI) | Lint and format check on every push and PR |
 | **Pre-commit** | Ruff + JSON/YAML/whitespace checks before every local commit |
+| **Lint CI** | Runs the same pre-commit suite on every push and PR |
 | **release-please** | Opens a Release PR automatically on every Conventional Commit merged to `main`; bumps `manifest.json` version and generates `CHANGELOG.md` |
 | **Dependabot** | Weekly PRs for GitHub Actions, Python dev-deps, pre-commit hooks and dev containers |
 | **devcontainer** | One-click Home Assistant dev environment in VS Code |
@@ -87,7 +87,7 @@ If you prefer not to use HACS:
 | `.github/dependabot.yml` | Automated dependency updates (weekly, grouped) |
 | `.github/ISSUE_TEMPLATE/*.yml` | Bug report and feature request templates |
 | `.github/PULL_REQUEST_TEMPLATE.md` | Pull request checklist (Conventional Commits) |
-| `.github/workflows/lint.yml` | Ruff lint + format check |
+| `.github/workflows/lint.yml` | Pre-commit suite in CI (same as `scripts/lint`) |
 | `.github/workflows/validate.yml` | hassfest and HACS validation |
 | `.github/workflows/release-please.yml` | Automated releases via Conventional Commits |
 | `.pre-commit-config.yaml` | Pre-commit hooks (JSON/YAML, Ruff, codespell) |

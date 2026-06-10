@@ -171,7 +171,8 @@ pre-commit run ruff --all-files   # single hook
 
 CI runs three workflows on every push and PR (see `.github/workflows/`):
 
-- **lint.yml** — `ruff check` + `ruff format --check` on Python 3.14.
+- **lint.yml** — the full pre-commit suite (`pre-commit run --all-files`) on
+  Python 3.14 — the same pipeline as `scripts/lint`.
 - **validate.yml** — `hassfest` (manifest, structure, translations) and HACS
   validation. Runs daily on cron too.
 - **release-please.yml** — opens / updates the Release PR on `main`. Requires
