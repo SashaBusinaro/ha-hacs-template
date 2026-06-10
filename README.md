@@ -244,6 +244,8 @@ to automate changelogs and GitHub Releases — no manual tagging required.
 2. release-please opens (or updates) a **Release PR** that:
    - Bumps the version in `manifest.json`
    - Generates a `CHANGELOG.md` entry
+   - Creates/updates a `version.txt` in the repo root (an artifact of the
+     `simple` release type — never edit it manually)
 3. Merge the Release PR → a GitHub Release and git tag are created automatically.
 
 ### Conventional Commits quick reference

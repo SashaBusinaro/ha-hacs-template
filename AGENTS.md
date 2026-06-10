@@ -72,6 +72,8 @@ pre-commit hooks.
 - **Never edit `CHANGELOG.md` manually** — it is managed by `release-please`.
 - **Never bump `version` in `manifest.json` manually** — `release-please` does it.
 - **Never edit `.release-please-manifest.json`** — same reason.
+- **Never edit `version.txt`** (appears in the repo root after the first
+  release) — same reason.
 - **Use Conventional Commits** (`feat:`, `fix:`, `docs:`, `chore:`, `refactor:`,
   `perf:`, `ci:`, `test:`). Bumps and changelog entries depend on the prefix:
 
