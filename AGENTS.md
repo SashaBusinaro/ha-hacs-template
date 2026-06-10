@@ -199,6 +199,8 @@ when a single line genuinely needs to break a rule.
 
 - `requirements.txt` is the single source of truth for dev / CI deps.
   Dependabot updates it weekly with grouped PRs (see `.github/dependabot.yml`).
+- Hook versions in `.pre-commit-config.yaml` (including Ruff) are updated by
+  Dependabot's `pre-commit` ecosystem — no manual bumping needed.
 - `homeassistant` is **excluded** from Dependabot — it must stay in sync with
   the `homeassistant` key in `hacs.json`. Bump them together manually.
   When bumping the minimum HA version, update all three places in lockstep:

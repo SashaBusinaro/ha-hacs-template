@@ -73,7 +73,7 @@ If you prefer not to use HACS:
 | **Ruff** (CI) | Lint and format check on every push and PR |
 | **Pre-commit** | Ruff + JSON/YAML/whitespace checks before every local commit |
 | **release-please** | Opens a Release PR automatically on every Conventional Commit merged to `main`; bumps `manifest.json` version and generates `CHANGELOG.md` |
-| **Dependabot** | Weekly grouped PRs for GitHub Actions and Python dev-deps |
+| **Dependabot** | Weekly PRs for GitHub Actions, Python dev-deps, pre-commit hooks and dev containers |
 | **devcontainer** | One-click Home Assistant dev environment in VS Code |
 
 ---
@@ -293,6 +293,7 @@ Dependabot opens **weekly grouped PRs** (every Monday) for:
 |---|---|
 | GitHub Actions | Minor + patch versions bundled into one PR; major updates separate |
 | Python (pip) | Minor + patch bundled; patch PRs wait 3 days, minor PRs 7 days before opening |
+| pre-commit hooks | Weekly, ungrouped — keeps Ruff and the other hook pins current |
 | Dev containers | Weekly, ungrouped |
 
 `homeassistant` is excluded from automatic updates — it must stay in sync with
