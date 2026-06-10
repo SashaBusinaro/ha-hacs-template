@@ -228,8 +228,8 @@ pre-commit run ruff --all-files
 pre-commit autoupdate
 ```
 
-> The Ruff version in `.pre-commit-config.yaml` is pinned to match `requirements.txt`.
-> When bumping Ruff via Dependabot, update both files together.
+> Ruff is pinned only in `.pre-commit-config.yaml`; Dependabot's `pre-commit`
+> ecosystem bumps it automatically every week.
 
 ---
 

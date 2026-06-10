@@ -96,8 +96,9 @@ pre-commit hooks.
 
   Release-As: 1.0.0
   ```
-- **Pin Ruff in both places**: `.pre-commit-config.yaml` and `requirements.txt`
-  must share the same Ruff version. Bump together.
+- **Ruff is pinned only in `.pre-commit-config.yaml`** — Dependabot's
+  `pre-commit` ecosystem bumps it automatically. Do not add Ruff to
+  `requirements.txt`; both `scripts/lint` and CI run it through pre-commit.
 - **Do not commit secrets** or files under `config/` other than
   `config/configuration.yaml` (enforced by `.gitignore`).
 
