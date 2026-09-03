@@ -25,6 +25,9 @@ from .const import DOMAIN, LOGGER
 #   - options flow — for runtime-tunable settings (poll interval, etc.)
 #   - discovery — declare zeroconf/ssdp/dhcp/bluetooth/usb/mqtt matchers in
 #     manifest.json and implement the corresponding async_step_<source>
+# Note on reloading (HA 2026.6+): do not combine an entry update listener
+# (`entry.add_update_listener`) with reloading methods in the config flow
+# (`async_update_reload_and_abort` or `_abort_if_unique_id_configured(updates=...)`).
 # https://developers.home-assistant.io/docs/config_entries_config_flow_handler
 class BlueprintFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
     """Config flow for Blueprint."""

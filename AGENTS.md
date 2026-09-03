@@ -146,8 +146,8 @@ common task is genuinely needed.
 Runs automatically before every `git commit`. To run manually:
 
 ```bash
-pre-commit run --all-files        # all hooks
-pre-commit run ruff --all-files   # single hook
+pre-commit run --all-files              # all hooks
+pre-commit run ruff-check --all-files   # single hook
 ```
 
 | Hook | What it checks |
@@ -157,7 +157,7 @@ pre-commit run ruff --all-files   # single hook
 | `trailing-whitespace` | removes trailing spaces |
 | `end-of-file-fixer` | ensures files end with a newline |
 | `check-merge-conflict` | blocks accidental merge-conflict markers |
-| `ruff` | lints Python and auto-fixes safe issues |
+| `ruff-check` | lints Python and auto-fixes safe issues |
 | `ruff-format` | formats Python code |
 | `codespell` | catches common typos in code, comments and docs |
 

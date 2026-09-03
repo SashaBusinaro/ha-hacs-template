@@ -208,7 +208,7 @@ before they reach CI.
 | `trailing-whitespace` | Removes trailing spaces |
 | `end-of-file-fixer` | Ensures files end with a newline |
 | `check-merge-conflict` | Blocks accidental merge-conflict markers |
-| `ruff` | Lints Python and auto-fixes safe issues |
+| `ruff-check` | Lints Python and auto-fixes safe issues |
 | `ruff-format` | Formats Python code |
 | `codespell` | Catches common typos in code, comments and docs |
 
@@ -222,7 +222,7 @@ scripts/setup
 pre-commit run --all-files
 
 # Run a single hook
-pre-commit run ruff --all-files
+pre-commit run ruff-check --all-files
 
 # Update hooks to latest pinned versions
 pre-commit autoupdate
