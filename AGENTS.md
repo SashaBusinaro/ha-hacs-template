@@ -217,6 +217,23 @@ template is deliberately minimal. Each note explains what is missing, when to
 add it, and links to the relevant HA developer doc. Grep for `# NOTE:` before
 asking the user where to extend — the answer is usually already inline.
 
+## Keeping up with Home Assistant standards
+
+Dependabot handles library and action bumps, but architectural alignment and
+best practices should follow official Home Assistant documentation (both when
+maintaining this template and after bootstrapping a custom component):
+
+- **Developer Blog & Deprecations**: [developers.home-assistant.io/blog/](https://developers.home-assistant.io/blog/) —
+  check monthly posts when bumping the minimum HA version for architectural
+  changes, upcoming deprecations, and new helpers.
+- **Developer Documentation**: [developers.home-assistant.io](https://developers.home-assistant.io/) —
+  official reference for config flow, coordinator patterns, and entity platforms.
+- **Integration Quality Scale**: [developers.home-assistant.io/docs/integration_quality_scale_index/](https://developers.home-assistant.io/docs/integration_quality_scale_index/) —
+  best practices checklist (error handling, session management, translation keys).
+- **Hassfest & HACS Action**: The CI workflow in `.github/workflows/validate.yml`
+  runs `hassfest` from HA Core `master` and `hacs/action` daily to catch schema
+  and manifest deprecations automatically.
+
 ## When in doubt
 
 - Match patterns already in the repo before introducing new ones.
