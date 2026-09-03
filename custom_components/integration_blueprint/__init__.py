@@ -58,23 +58,18 @@ async def async_setup_entry(
     await coordinator.async_config_entry_first_refresh()
 
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
-    # Reload the integration when entry options or data are updated
-    entry.async_on_unload(entry.add_update_listener(async_reload_entry))
 
     return True
 
 
+# NOTE: this template does not register an `entry.add_update_listener` by default.
+# Combining an update listener with config flow reloading methods is deprecated
+# (HA Core 2026.6+). If you implement an options flow later, add the listener here
+# and ensure your flow uses `async_update_and_abort()` instead of reloading methods.
+# https://developers.home-assistant.io/blog/2026/05/07/config-entry-listener-together-with-reloading-methods/
 async def async_unload_entry(
     hass: HomeAssistant,
     entry: IntegrationBlueprintConfigEntry,
 ) -> bool:
     """Handle removal of an entry."""
     return await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
-
-
-async def async_reload_entry(
-    hass: HomeAssistant,
-    entry: IntegrationBlueprintConfigEntry,
-) -> None:
-    """Reload config entry."""
-    await hass.config_entries.async_reload(entry.entry_id)
